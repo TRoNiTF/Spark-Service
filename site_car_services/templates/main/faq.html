@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Вопрос-Ответ - Сервисный центр ИСКРА{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>Часто задаваемые вопросы</h1>
+    </div>
+</section>
+
+<section class="faq-section">
+    <div class="container">
+        <div class="faq-list">
+            {% for item in faq_list %}
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>{{ item.question }}</h3>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>{{ item.answer }}</p>
+                </div>
+            </div>
+            {% empty %}
+            <div class="faq-placeholder">
+                <h3>Какие услуги вы предоставляете?</h3>
+                <p>Мы предоставляем полный спектр услуг по ремонту и обслуживанию автомобилей, включая диагностику, техническое обслуживание, ремонт двигателя, ходовой части, тормозной системы и многое другое.</p>
+            </div>
+            <div class="faq-placeholder">
+                <h3>Сколько времени занимает ремонт?</h3>
+                <p>Время ремонта зависит от сложности работ. Простое ТО занимает от 1-2 часов, более сложный ремонт может занять от нескольких дней до недели. Точные сроки мы озвучиваем после диагностики.</p>
+            </div>
+            <div class="faq-placeholder">
+                <h3>Какая гарантия на выполненные работы?</h3>
+                <p>Мы предоставляем гарантию 14 дней на все виды работ.</p>
+            </div>
+            <div class="faq-placeholder">
+                <h3>Нужно ли записываться заранее?</h3>
+                <p>Мы рекомендуем записываться заранее, чтобы мы могли зарезервировать для вас время. Однако мы также принимаем клиентов без записи по мере возможности.</p>
+            </div>
+            <div class="faq-placeholder">
+                <h3>Какие формы оплаты вы принимаете?</h3>
+                <p>Мы принимаем оплату наличными и безналичным расчетом по договору.</p>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="faq-contact">
+            <h2>Не нашли ответ на свой вопрос?</h2>
+            <p>Свяжитесь с нами, и мы с радостью ответим на все ваши вопросы</p>
+            <button class="btn btn-primary btn-large" onclick="openCallModal()">Задать вопрос</button>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

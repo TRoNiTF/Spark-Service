@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Сервисный центр ИСКРА{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <!-- Шапка сайта -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-section">
+                    <a href="{% url 'home' %}" class="logo-link">
+                        <div class="logo-placeholder">[LOGO]</div>
+                        <h1 class="site-title">Сервисный центр ИСКРА</h1>
+                    </a>
+                </div>
+                
+                <nav class="navigation" id="mainNav">
+                    <button class="nav-toggle" id="navToggle">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <ul class="nav-menu" id="navMenu">
+                        {% if request.path != '/' %}
+                            <li><a href="{% url 'home' %}">Главная</a></li>
+                        {% endif %}
+                        {% if request.path != '/services/' %}
+                            <li><a href="{% url 'services' %}">Услуги</a></li>
+                        {% endif %}
+                        {% if request.path != '/about/' %}
+                            <li><a href="{% url 'about' %}">О нас</a></li>
+                        {% endif %}
+                        {% if request.path != '/contacts/' %}
+                            <li><a href="{% url 'contacts' %}">Контакты</a></li>
+                        {% endif %}
+                        {% if request.path != '/faq/' %}
+                            <li><a href="{% url 'faq' %}">Вопрос-Ответ</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                
+                <div class="header-right">
+                    <div class="contact-phone">
+                        <a href="tel:+79535076179">+7 (953) 507-61-79</a>
+                    </div>
+                    
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'profile' %}" class="btn btn-secondary">Профиль</a>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="btn btn-secondary">Войти</a>
+                    {% endif %}
+                    
+                    <button class="btn btn-primary" onclick="openCallModal()">Заказать звонок</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Сообщения -->
+    {% if messages %}
+        <div class="messages-container">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                    <button class="close-alert" onclick="this.parentElement.remove()">×</button>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Основной контент -->
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Подвал сайта -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <p class="footer-title">Сервисный центр ИСКРА</p>
+                    <a href="#" onclick="openPrivacyModal(); return false;" class="privacy-link">
+                        Политика обработки персональных данных
+                    </a>
+                </div>
+                <div class="footer-right">
+                    <p>Разработчик: Шамаев Константин</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Модальное окно заказа звонка -->
+    <div id="callModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeCallModal()">&times;</span>
+            <h2>Заказать звонок</h2>
+            <p class="modal-info">Мы перезвоним вам в течение 15 минут</p>
+            <form id="callForm">
+                {% csrf_token %}
+                <input type="hidden" id="serviceId" name="service_id">
+                <div class="form-group">
+                    <label for="callName">Имя</label>
+                    <input type="text" id="callName" name="name" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="callPhone">Телефон</label>
+                    <input type="tel" id="callPhone" name="telephone" class="form-control phone-input" 
+                           placeholder="+7 (___) ___ - __ - __" required>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" id="callAgree" name="agree_privacy" class="form-check-input" required>
+                    <label for="callAgree" class="form-check-label">
+                        Согласен с <a href="#" onclick="openPrivacyModal(); return false;">политикой обработки персональных данных</a>
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Отправить</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Модальное окно политики конфиденциальности -->
+    <div id="privacyModal" class="modal">
+        <div class="modal-content modal-large">
+            <span class="close" onclick="closePrivacyModal()">&times;</span>
+            <div class="privacy-content">
+                {% include 'main/privacy_content.html' %}
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>
+

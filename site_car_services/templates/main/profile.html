@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Профиль - Сервисный центр ИСКРА{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>Профиль пользователя</h1>
+    </div>
+</section>
+
+<section class="profile-section">
+    <div class="container">
+        <div class="profile-content">
+            <div class="profile-sidebar">
+                <div class="profile-avatar-section">
+                    {% if user.image %}
+                        <img src="{{ user.image.url }}" alt="{{ user.get_full_name }}" class="profile-avatar">
+                    {% else %}
+                        <div class="profile-avatar-placeholder">👤</div>
+                    {% endif %}
+                    
+                    <div class="profile-avatar-actions">
+                        <form method="post" enctype="multipart/form-data" id="imageUploadForm">
+                            {% csrf_token %}
+                            <input type="file" name="image" id="imageInput" accept="image/*" style="display: none;" onchange="document.getElementById('imageUploadForm').submit()">
+                            <button type="button" class="btn btn-secondary btn-sm" onclick="document.getElementById('imageInput').click()">
+                                Изменить фото
+                            </button>
+                        </form>
+                        
+                        {% if user.image %}
+                        <form method="post" style="margin-top: 10px;">
+                            {% csrf_token %}
+                            <button type="submit" name="delete_image" class="btn btn-danger btn-sm">
+                                Удалить фото
+                            </button>
+                        </form>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="profile-info-display">
+                    <h3>{{ user.get_full_name }}</h3>
+                    <p>{{ user.telephone }}</p>
+                    {% if user.birth_date %}
+                        <p>Дата рождения: {{ user.birth_date|date:"d.m.Y" }}</p>
+                    {% endif %}
+                </div>
+
+                <a href="{% url 'logout' %}" class="btn btn-danger btn-block">Выйти</a>
+            </div>
+
+            <div class="profile-main">
+                <h2>Редактирование профиля</h2>
+                <form method="post" class="profile-form">
+                    {% csrf_token %}
+                    
+                    <div class="form-group">
+                        <label for="{{ form.surname.id_for_label }}">{{ form.surname.label }}</label>
+                        {{ form.surname }}
+                        {% if form.surname.errors %}
+                            <div class="error">{{ form.surname.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+                        {{ form.name }}
+                        {% if form.name.errors %}
+                            <div class="error">{{ form.name.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.patronymic.id_for_label }}">{{ form.patronymic.label }}</label>
+                        {{ form.patronymic }}
+                        {% if form.patronymic.errors %}
+                            <div class="error">{{ form.patronymic.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.birth_date.id_for_label }}">{{ form.birth_date.label }}</label>
+                        {{ form.birth_date }}
+                        {% if form.birth_date.errors %}
+                            <div class="error">{{ form.birth_date.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.telephone.id_for_label }}">{{ form.telephone.label }}</label>
+                        {{ form.telephone }}
+                        {% if form.telephone.errors %}
+                            <div class="error">{{ form.telephone.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
