@@ -1,0 +1,75 @@
+/* Планшеты (768px - 1024px) */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    .container {
+        padding: 0 30px;
+    }
+
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .faq-item {
+        margin-bottom: 30px;
+    }
+
+    .faq-question h3 {
+        font-size: 18px;
+    }
+
+    .footer-content {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+
+/* Мобильные устройства */
+@media screen and (max-width: 767px) {
+    .nav-toggle {
+        display: flex;
+    }
+
+    .nav-menu {
+        display: none;
+        position: absolute;
+        top: 80px;
+        left: 0;
+        right: 0;
+        background: #000;
+        flex-direction: column;
+        padding: 20px;
+        gap: 15px;
+        z-index: 1000;
+    }
+
+    .nav-menu.active {
+        display: flex;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+
+    .faq-item {
+        margin-bottom: 25px;
+    }
+
+    .faq-question {
+        padding: 15px;
+    }
+
+    .faq-question h3 {
+        font-size: 16px;
+    }
+
+    .faq-answer p {
+        padding: 15px;
+        font-size: 14px;
+    }
+}
