@@ -2,60 +2,66 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>{% block title %}Сервисный центр «ИСКРА»{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Сервисный центр ИСКРА{% endblock %}</title>
     {% load static %}
-    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
-    <link rel="shortcut icon" type="image/png" href="{% static 'images/logo-icon.png' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
-    <link rel="stylesheet" href="{% static 'css/advantages.css' %}">
 </head>
 <body>
+    <!-- Шапка сайта -->
     <header class="header">
         <div class="container">
-<div class="logo-section">
-    <a href="{% url 'home' %}" class="logo-link">
-        {% load static %}
-        <img src="{% static 'images/logo.png' %}" alt="Сервисный центр ИСКРА" style="height: 50px; width: auto;">
-        <h1 class="site-title">Сервисный центр «ИСКРА»</h1>
-    </a>
-</div>
-                <button class="nav-toggle" id="navToggle">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-
+            <div class="header-content">
+                <div class="logo-section">
+                    <a href="{% url 'home' %}" class="logo-link">
+                        <div class="logo-placeholder">[LOGO]</div>
+                        <h1 class="site-title">Сервисный центр ИСКРА</h1>
+                    </a>
+                </div>
+                
                 <nav class="navigation" id="mainNav">
+                    <button class="nav-toggle" id="navToggle">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
                     <ul class="nav-menu" id="navMenu">
-                        <li><a href="{% url 'home' %}">Главная</a></li>
-                        <li><a href="{% url 'services' %}">Услуги</a></li>
-                        <li><a href="{% url 'about' %}">О нас</a></li>
-                        <li><a href="{% url 'contacts' %}">Контакты</a></li>
-                        <li><a href="{% url 'faq' %}">Вопрос-Ответ</a></li>
+                        {% if request.path != '/' %}
+                            <li><a href="{% url 'home' %}">Главная</a></li>
+                        {% endif %}
+                        {% if request.path != '/services/' %}
+                            <li><a href="{% url 'services' %}">Услуги</a></li>
+                        {% endif %}
+                        {% if request.path != '/about/' %}
+                            <li><a href="{% url 'about' %}">О нас</a></li>
+                        {% endif %}
+                        {% if request.path != '/contacts/' %}
+                            <li><a href="{% url 'contacts' %}">Контакты</a></li>
+                        {% endif %}
+                        {% if request.path != '/faq/' %}
+                            <li><a href="{% url 'faq' %}">Вопрос-Ответ</a></li>
+                        {% endif %}
                     </ul>
                 </nav>
-
+                
                 <div class="header-right">
                     <div class="contact-phone">
                         <a href="tel:+79535076179">+7 (953) 507-61-79</a>
                     </div>
-
+                    
                     {% if user.is_authenticated %}
                         <a href="{% url 'profile' %}" class="btn btn-secondary">Профиль</a>
-                        <a href="{% url 'logout' %}" class="btn btn-danger">Выйти</a>
                     {% else %}
                         <a href="{% url 'login' %}" class="btn btn-secondary">Войти</a>
-                        <a href="{% url 'register' %}" class="btn btn-primary">Регистрация</a>
                     {% endif %}
-
+                    
                     <button class="btn btn-primary" onclick="openCallModal()">Заказать звонок</button>
                 </div>
             </div>
         </div>
     </header>
 
+    <!-- Сообщения -->
     {% if messages %}
         <div class="messages-container">
             {% for message in messages %}
@@ -67,15 +73,17 @@
         </div>
     {% endif %}
 
+    <!-- Основной контент -->
     <main class="main-content">
         {% block content %}{% endblock %}
     </main>
 
+    <!-- Подвал сайта -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-left">
-                    <p class="footer-title">Сервисный центр «ИСКРА»</p>
+                    <p class="footer-title">Сервисный центр ИСКРА</p>
                     <a href="#" onclick="openPrivacyModal(); return false;" class="privacy-link">
                         Политика обработки персональных данных
                     </a>
@@ -87,11 +95,12 @@
         </div>
     </footer>
 
+    <!-- Модальное окно заказа звонка -->
     <div id="callModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeCallModal()">&times;</span>
             <h2>Заказать звонок</h2>
-            <p class="modal-info">Перезвоним в течение 15 минут</p>
+            <p class="modal-info">Мы перезвоним вам в течение 15 минут</p>
             <form id="callForm">
                 {% csrf_token %}
                 <input type="hidden" id="serviceId" name="service_id">
@@ -101,7 +110,7 @@
                 </div>
                 <div class="form-group">
                     <label for="callPhone">Телефон</label>
-                    <input type="tel" id="callPhone" name="telephone" class="form-control phone-input"
+                    <input type="tel" id="callPhone" name="telephone" class="form-control phone-input" 
                            placeholder="+7 (___) ___ - __ - __" required>
                 </div>
                 <div class="form-check">
@@ -115,6 +124,7 @@
         </div>
     </div>
 
+    <!-- Модальное окно политики конфиденциальности -->
     <div id="privacyModal" class="modal">
         <div class="modal-content modal-large">
             <span class="close" onclick="closePrivacyModal()">&times;</span>
@@ -127,3 +137,4 @@
     <script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>
+
