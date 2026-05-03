@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Вход - Сервисный центр ИСКРА{% endblock %}
+{% block title %}Вход — Сервисный центр «ИСКРА»{% endblock %}
 
 {% block content %}
 <section class="auth-section">
@@ -30,7 +30,7 @@
                 </div>
 
                 <div class="form-links">
-                    <a href="#" class="forgot-password">Забыли пароль?</a>
+                    <a href="{% url 'password_reset_request' %}" class="forgot-password">Забыли пароль?</a>
                 </div>
 
                 <button type="submit" class="btn btn-primary btn-block">Войти</button>

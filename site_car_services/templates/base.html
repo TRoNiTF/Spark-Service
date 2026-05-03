@@ -2,22 +2,26 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Сервисный центр ИСКРА{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>{% block title %}Сервисный центр «ИСКРА»{% endblock %}</title>
     {% load static %}
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/logo-icon.png' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
 </head>
 <body>
     <!-- Шапка сайта -->
     <header class="header">
         <div class="container">
             <div class="header-content">
-                <div class="logo-section">
-                    <a href="{% url 'home' %}" class="logo-link">
-                        <div class="logo-placeholder">[LOGO]</div>
-                        <h1 class="site-title">Сервисный центр ИСКРА</h1>
-                    </a>
-                </div>
+<div class="logo-section">
+    <a href="{% url 'home' %}" class="logo-link">
+        {% load static %}
+        <img src="{% static 'images/logo.png' %}" alt="Сервисный центр ИСКРА" class="logo-img" style="height: 50px; width: auto;">
+        <h1 class="site-title">Сервисный центр «ИСКРА»</h1>
+    </a>
+</div>
                 
                 <nav class="navigation" id="mainNav">
                     <button class="nav-toggle" id="navToggle">
@@ -44,10 +48,11 @@
                     </ul>
                 </nav>
                 
-                <div class="header-right">
-                    <div class="contact-phone">
-                        <a href="tel:+79535076179">+7 (953) 507-61-79</a>
-                    </div>
+<div class="contact-phone">
+    {% if user.is_authenticated and user.telephone %}
+        <a href="tel:{{ user.telephone }}">{{ user.telephone }}</a>
+    {% endif %}
+</div>
                     
                     {% if user.is_authenticated %}
                         <a href="{% url 'profile' %}" class="btn btn-secondary">Профиль</a>

@@ -45,6 +45,54 @@ body {
     justify-content: space-between;
     align-items: center;
     gap: 20px;
+    flex-wrap: wrap;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    text-decoration: none;
+    color: inherit;
+}
+
+.logo-img {
+    height: 50px;
+    width: auto;
+}
+
+.site-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--color-yellow);
+    margin: 0;
+    white-space: nowrap;
+}
+
+.navigation {
+    flex: 1;
+    margin-left: 30px;
+}
+
+.nav-menu {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+    margin: 0;
+    padding: 0;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-shrink: 0;
 }
 
 .logo-section {
@@ -1074,3 +1122,525 @@ textarea.form-control {
     }
 }
 
+/* Отступы для страницы детальной услуги */
+.service-detail {
+    padding: 60px 0;
+    margin-bottom: 40px;
+}
+
+.service-detail-content {
+    margin-bottom: 60px;
+}
+
+/* Отступы для блока отзывов на странице услуги */
+.reviews-section {
+    margin-top: 60px;
+    padding-top: 20px;
+}
+
+.review-form {
+    margin-bottom: 40px;
+    padding: 30px;
+}
+
+.reviews-list {
+    margin-top: 30px;
+}
+
+.review-item {
+    margin-bottom: 25px;
+    padding: 20px;
+}
+
+/* Отступы для страницы FAQ */
+.faq-section {
+    padding: 60px 0;
+    margin-bottom: 40px;
+}
+
+.faq-list {
+    margin-bottom: 60px;
+}
+
+.faq-item {
+    margin-bottom: 25px;
+}
+
+.faq-contact {
+    margin-top: 60px;
+    padding: 40px 30px;
+}
+
+.faq-contact .btn {
+    margin-top: 25px;
+}
+
+/* Отступы для кнопки "Задать вопрос" */
+.faq-contact p {
+    margin-bottom: 20px;
+}
+
+/* Мобильная версия - логотип слева */
+@media (max-width: 800px) {
+    .header-content {
+        flex-wrap: wrap;
+    }
+
+    .logo-section {
+        flex: 1;
+    }
+
+    .site-title {
+        font-size: 20px;
+        white-space: normal;
+    }
+
+    .navigation {
+        order: 3;
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .header-right {
+        gap: 10px;
+    }
+
+    .btn {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+}
+
+/* Исправление шапки для страницы профиля и других страниц */
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: inherit;
+}
+
+.logo-img {
+    height: 40px;
+    width: auto;
+}
+
+.site-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--color-yellow);
+    margin: 0;
+    white-space: nowrap;
+}
+
+.navigation {
+    flex: 1;
+    margin-left: 20px;
+}
+
+.nav-menu {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+}
+
+.contact-phone a {
+    color: var(--color-white);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.btn {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s;
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* Для экранов от 900px до 1100px */
+@media (max-width: 1100px) {
+    .site-title {
+        font-size: 20px;
+    }
+
+    .nav-menu {
+        gap: 15px;
+    }
+
+    .nav-menu li a {
+        font-size: 14px;
+    }
+
+    .btn {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+
+    .contact-phone a {
+        font-size: 13px;
+    }
+}
+
+/* Для планшетов */
+@media (max-width: 900px) {
+    .header-content {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .logo-section {
+        flex: 1;
+    }
+
+    .site-title {
+        font-size: 18px;
+        white-space: normal;
+    }
+
+    .logo-img {
+        height: 35px;
+    }
+
+    .navigation {
+        order: 3;
+        width: 100%;
+        margin-left: 0;
+        margin-top: 15px;
+    }
+
+    .nav-menu {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .header-right {
+        justify-content: flex-end;
+    }
+}
+
+/* Для мобильных */
+@media (max-width: 600px) {
+    .header-right {
+        width: 100%;
+        justify-content: space-between;
+        margin-top: 10px;
+    }
+
+    .contact-phone a {
+        font-size: 12px;
+    }
+
+    .btn {
+        padding: 5px 10px;
+        font-size: 12px;
+    }
+
+    .site-title {
+        font-size: 16px;
+    }
+}
+
+/* ======================================== */
+/* 1. АДАПТИВ ШАПКИ ДЛЯ GALAXY S25 И ПЛАНШЕТОВ */
+/* ======================================== */
+
+/* Базовые стили шапки */
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+}
+
+.logo-img {
+    height: 45px;
+    width: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.site-title {
+    font-size: 22px;
+    font-weight: bold;
+    color: var(--color-yellow);
+    margin: 0;
+    white-space: nowrap;
+}
+
+.nav-menu {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* Для экранов 1920x1080 и больше */
+@media (min-width: 1920px) {
+    .container {
+        max-width: 1400px;
+    }
+
+    .site-title {
+        font-size: 26px;
+    }
+
+    .nav-menu {
+        gap: 30px;
+    }
+}
+
+/* Для планшетов (768px - 1024px) */
+@media (max-width: 1024px) and (min-width: 768px) {
+    .site-title {
+        font-size: 18px;
+        white-space: normal;
+    }
+
+    .nav-menu {
+        gap: 12px;
+    }
+
+    .nav-menu li a {
+        font-size: 13px;
+    }
+
+    .btn {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+
+    .logo-img {
+        height: 40px;
+        width: 40px;
+    }
+}
+
+/* Для мобильных (до 767px) */
+@media (max-width: 767px) {
+    .header-content {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .logo-section {
+        flex: 1;
+    }
+
+    .site-title {
+        font-size: 14px;
+        white-space: normal;
+    }
+
+    .logo-img {
+        height: 35px;
+        width: 35px;
+    }
+
+    .nav-toggle {
+        display: flex;
+        order: 2;
+    }
+
+    .navigation {
+        order: 3;
+        width: 100%;
+        display: none;
+    }
+
+    .navigation.active {
+        display: block;
+    }
+
+    .nav-menu {
+        flex-direction: column;
+        gap: 10px;
+        padding: 15px 0;
+    }
+
+    .header-right {
+        order: 1;
+        justify-content: flex-end;
+        gap: 8px;
+    }
+
+    .btn {
+        padding: 5px 10px;
+        font-size: 11px;
+    }
+
+    .contact-phone a {
+        font-size: 12px;
+    }
+}
+
+/* Для Galaxy S25 и маленьких телефонов (до 480px) */
+@media (max-width: 480px) {
+    .header-right {
+        width: 100%;
+        justify-content: space-between;
+        margin-top: 10px;
+    }
+
+    .btn-primary {
+        order: 3;
+    }
+
+    .btn-secondary {
+        order: 1;
+    }
+
+    .contact-phone {
+        order: 2;
+    }
+
+    .site-title {
+        font-size: 12px;
+    }
+
+    .logo-img {
+        height: 30px;
+        width: 30px;
+    }
+}
+
+/* ======================================== */
+/* 2. АНИМАЦИИ ДЛЯ БЛОКОВ */
+/* ======================================== */
+
+/* Анимация для блоков на главной */
+.advantage-item,
+.service-card,
+.stat-item,
+.review-item,
+.faq-item {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.advantage-item:hover,
+.service-card:hover,
+.stat-item:hover,
+.review-item:hover,
+.faq-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Запрет выделения текста при наведении */
+.advantage-item,
+.service-card,
+.stat-item,
+.review-item,
+.faq-item {
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* Анимация для кнопок */
+.btn {
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* ======================================== */
+/* 3. ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ НА МОБИЛЬНЫХ */
+/* ======================================== */
+
+@media (max-width: 768px) {
+    .privacy-content,
+    .privacy-page {
+        padding: 15px;
+    }
+
+    .privacy-content h1 {
+        font-size: 24px;
+    }
+
+    .privacy-content h2 {
+        font-size: 18px;
+    }
+
+    .privacy-content p,
+    .privacy-content li {
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    .privacy-content ul {
+        padding-left: 20px;
+    }
+
+    .modal-large {
+        width: 95%;
+        margin: 10% auto;
+        padding: 20px;
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+}
+
+/* ======================================== */
+/* 4. ЗАКРЫТИЕ МЕНЮ ПРИ КЛИКЕ ВНЕ ЕГО */
+/* ======================================== */
+
+/* Этот стиль не нужен, логика в JS */

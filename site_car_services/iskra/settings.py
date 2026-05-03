@@ -128,13 +128,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Custom user model
 AUTH_USER_MODEL = 'main.CustomUser'
 
-# Email settings
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# Email settings для Яндекс (рабочий вариант)
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'dim.shamaeff@yandex.ru'
-EMAIL_HOST_PASSWORD = ''  # Указать пароль приложения в продакшене
+EMAIL_USE_SSL = False
+EMAIL_HOST_USER = 'eugeni.shamaev@yandex.ru'
+EMAIL_HOST_PASSWORD = 'ftofyqpwufoinvwj'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # Session settings
 SESSION_COOKIE_AGE = 2678400  # 31 день в секундах
@@ -145,3 +147,9 @@ LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 
+# Custom authentication backends
+AUTHENTICATION_BACKENDS = [
+    'main.backends.PhoneBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+ADMIN_PHONE = '+7 (999) 887-76-66'  # укажи нужный номер

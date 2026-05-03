@@ -1,15 +1,26 @@
 // Навигационное меню
 document.addEventListener('DOMContentLoaded', function() {
     const navToggle = document.getElementById('navToggle');
+    const navigation = document.querySelector('.navigation');
     const navMenu = document.getElementById('navMenu');
-    
+
     if (navToggle) {
-        navToggle.addEventListener('click', function() {
-            navMenu.classList.toggle('active');
+        navToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (navigation) navigation.classList.toggle('active');
+            if (navMenu) navMenu.classList.toggle('active');
         });
     }
-    
-    // Инициализация маски телефона для всех полей
+
+    // Закрытие при клике вне меню
+    document.addEventListener('click', function(event) {
+        if (navigation && navToggle && !navigation.contains(event.target) && !navToggle.contains(event.target)) {
+            navigation.classList.remove('active');
+            if (navMenu) navMenu.classList.remove('active');
+        }
+    });
+
+    // Инициализация маски телефона
     initPhoneMasks();
     
     // Автоматическое закрытие сообщений через 5 секунд
@@ -276,3 +287,26 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// Закрытие мобильного меню при клике вне его
+document.addEventListener('DOMContentLoaded', function() {
+    const navToggle = document.getElementById('navToggle');
+    const navMenu = document.getElementById('navMenu');
+    const navigation = document.querySelector('.navigation');
+
+    // Закрытие при клике вне меню
+    document.addEventListener('click', function(event) {
+        if (navigation && navToggle && !navigation.contains(event.target) && !navToggle.contains(event.target)) {
+            navigation.classList.remove('active');
+            if (navMenu) navMenu.classList.remove('active');
+        }
+    });
+
+    // Открытие/закрытие по кнопке
+    if (navToggle) {
+        navToggle.addEventListener('click', function(event) {
+            event.stopPropagation();
+            if (navigation) navigation.classList.toggle('active');
+            if (navMenu) navMenu.classList.toggle('active');
+        });
+    }
+});
