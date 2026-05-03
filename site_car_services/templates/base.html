@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <title>{% block title %}Сервисный центр «ИСКРА»{% endblock %}</title>
     {% load static %}
     <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
@@ -137,7 +137,7 @@
 
     <script src="{% static 'js/main.js' %}"></script>
 
-    <!-- Стили и скрипт для мобильного меню -->
+    <!-- Стили для мобильного меню -->
     <style>
         @media (max-width: 768px) {
             .nav-toggle {
@@ -201,50 +201,51 @@
         }
     </style>
 
+    <!-- Скрипт для мобильного меню -->
     <script>
         (function() {
-            function init() {
+            function initMobileMenu() {
                 var toggle = document.getElementById('navToggle');
                 var nav = document.querySelector('.navigation');
                 var overlay = document.getElementById('menuOverlay');
 
-                if (!toggle || !nav) {
-                    console.log('Элементы не найдены');
-                    return;
+                if (!toggle || !nav) return;
+
+                function closeMenu() {
+                    nav.classList.remove('active');
+                    toggle.classList.remove('active');
+                    if (overlay) overlay.classList.remove('active');
+                    document.body.style.overflow = '';
                 }
 
-                console.log('Меню инициализировано');
+                function openMenu() {
+                    nav.classList.add('active');
+                    toggle.classList.add('active');
+                    if (overlay) overlay.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }
 
                 toggle.onclick = function(e) {
                     e.stopPropagation();
-                    nav.classList.toggle('active');
-                    toggle.classList.toggle('active');
-                    if (overlay) overlay.classList.toggle('active');
-                    console.log('Клик, active: ' + nav.classList.contains('active'));
+                    if (nav.classList.contains('active')) {
+                        closeMenu();
+                    } else {
+                        openMenu();
+                    }
                 };
 
-                if (overlay) {
-                    overlay.onclick = function() {
-                        nav.classList.remove('active');
-                        toggle.classList.remove('active');
-                        overlay.classList.remove('active');
-                    };
-                }
+                if (overlay) overlay.onclick = closeMenu;
 
                 var links = document.querySelectorAll('.nav-menu a');
                 for (var i = 0; i < links.length; i++) {
-                    links[i].onclick = function() {
-                        nav.classList.remove('active');
-                        toggle.classList.remove('active');
-                        if (overlay) overlay.classList.remove('active');
-                    };
+                    links[i].onclick = closeMenu;
                 }
             }
 
             if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', init);
+                document.addEventListener('DOMContentLoaded', initMobileMenu);
             } else {
-                init();
+                initMobileMenu();
             }
         })();
     </script>
