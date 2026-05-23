@@ -8,10 +8,10 @@
     <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
     <link rel="shortcut icon" type="image/png" href="{% static 'images/logo-icon.png' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <!--<link rel="stylesheet" href="{% static 'css/responsive.css' %}">-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide@3.6.0/dist/css/glide.core.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide@3.6.0/dist/css/glide.theme.min.css">
 </head>
 <body>
-    <!-- Шапка сайта -->
     <header class="header">
         <div class="container">
             <div class="header-content">
@@ -26,7 +26,6 @@
                     <span></span>
                     <span></span>
                 </button>
-
                 <div class="navigation" id="mainNav">
                     <ul class="nav-menu" id="navMenu">
                         <li><a href="{% url 'home' %}">Главная</a></li>
@@ -36,32 +35,20 @@
                         <li><a href="{% url 'faq' %}">Вопрос-Ответ</a></li>
                     </ul>
                 </div>
-
                 <div class="header-right">
-                    <div class="contact-phone">
-                        {% if user.is_authenticated and user.telephone %}
-                            <a href="tel:{{ user.telephone }}">{{ user.telephone }}</a>
-                        {% endif %}
-                    </div>
-
                     {% if user.is_authenticated %}
                         <a href="{% url 'profile' %}" class="btn btn-secondary">Профиль</a>
-                        <a href="{% url 'logout' %}" class="btn btn-danger">Выйти</a>
+                        <a href="{% url 'logout' %}" class="btn btn-danger btn-logout">Выйти</a>
                     {% else %}
                         <a href="{% url 'login' %}" class="btn btn-secondary">Войти</a>
-                        <a href="{% url 'register' %}" class="btn btn-primary">Регистрация</a>
+                        <a href="{% url 'register' %}" class="btn btn-primary btn-registration">Регистрация</a>
                     {% endif %}
-
-                    <button class="btn btn-primary" onclick="openCallModal()">Заказать звонок</button>
+                    <button class="btn btn-primary btn-menu-call" onclick="openCallModal()">Заказать звонок</button>
                 </div>
             </div>
         </div>
     </header>
-
-    <!-- Оверлей для мобильного меню -->
     <div class="menu-overlay" id="menuOverlay"></div>
-
-    <!-- Сообщения -->
     {% if messages %}
         <div class="messages-container">
             {% for message in messages %}
@@ -72,13 +59,9 @@
             {% endfor %}
         </div>
     {% endif %}
-
-    <!-- Основной контент -->
     <main class="main-content">
         {% block content %}{% endblock %}
     </main>
-
-    <!-- Подвал сайта -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
@@ -87,15 +70,27 @@
                     <a href="#" onclick="openPrivacyModal(); return false;" class="privacy-link">
                         Политика обработки персональных данных
                     </a>
+                    {% if user.is_superuser %}
+                        <a href="/admin/" class="admin-link" target="_blank">Вход для администратора</a>
+                    {% endif %}
+                </div>
+                <div class="footer-center">
+                    <ul class="nav-menu" id="navMenu">
+                        <li><a href="{% url 'home' %}">Главная</a></li>
+                        <li><a href="{% url 'services' %}">Услуги</a></li>
+                        <li><a href="{% url 'about' %}">О нас</a></li>
+                        <li><a href="{% url 'contacts' %}">Контакты</a></li>
+                        <li><a href="{% url 'faq' %}">Вопрос-Ответ</a></li>
+                    </ul>
                 </div>
                 <div class="footer-right">
-                    <p>Разработчик: Шамаев Константин</p>
+                    <p><strong>Телефон:</strong> <a href="tel:+79535076179" class="cont">+7 (953) 507-61-79</a></p>
+                    <p><strong>Email:</strong> <a href="mailto:dim.shamaeff@yandex.ru" class="cont">dim.shamaeff@yandex.ru</a></p>
+                    <p>г. Вологда, ул. Саммера 64А</p>
                 </div>
             </div>
         </div>
     </footer>
-
-    <!-- Модальное окно заказа звонка -->
     <div id="callModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeCallModal()">&times;</span>
@@ -106,7 +101,7 @@
                 <input type="hidden" id="serviceId" name="service_id">
                 <div class="form-group">
                     <label for="callName">Имя</label>
-                    <input type="text" id="callName" name="name" class="form-control" required>
+                    <input type="text" id="callName" name="name" class="form-control" maxlength="20" required>
                 </div>
                 <div class="form-group">
                     <label for="callPhone">Телефон</label>
@@ -123,8 +118,6 @@
             </form>
         </div>
     </div>
-
-    <!-- Модальное окно политики конфиденциальности -->
     <div id="privacyModal" class="modal">
         <div class="modal-content modal-large">
             <span class="close" onclick="closePrivacyModal()">&times;</span>
@@ -133,73 +126,7 @@
             </div>
         </div>
     </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide@3.6.0/dist/glide.min.js"></script>
     <script src="{% static 'js/main.js' %}"></script>
-
-    <!-- Стили для мобильного меню -->
-    <style>
-        @media (max-width: 768px) {
-            .nav-toggle {
-                display: flex !important;
-                background: none;
-                border: none;
-                cursor: pointer;
-                flex-direction: column;
-                gap: 5px;
-                padding: 10px;
-                z-index: 1001;
-            }
-            .nav-toggle span {
-                width: 25px;
-                height: 3px;
-                background-color: white;
-                transition: 0.3s;
-                border-radius: 2px;
-            }
-            .navigation {
-                position: fixed !important;
-                top: 70px;
-                left: -280px;
-                width: 280px;
-                height: calc(100vh - 70px);
-                background-color: black;
-                transition: left 0.3s ease;
-                z-index: 1000;
-                overflow-y: auto;
-                display: block !important;
-            }
-            .navigation.active {
-                left: 0 !important;
-            }
-            .nav-menu {
-                flex-direction: column !important;
-                padding: 20px !important;
-                margin: 0 !important;
-            }
-            .nav-menu li {
-                width: 100%;
-                border-bottom: 1px solid rgba(255,255,255,0.1);
-            }
-            .nav-menu li a {
-                display: block;
-                padding: 15px 0;
-            }
-            .menu-overlay {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0,0,0,0.5);
-                z-index: 999;
-                display: none;
-            }
-            .menu-overlay.active {
-                display: block;
-            }
-        }
-    </style>
-
-
 </body>
 </html>

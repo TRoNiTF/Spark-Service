@@ -3,7 +3,17 @@ Django settings for iskra project.
 """
 
 from pathlib import Path
+import sys
 import os
+from django.views.debug import technical_500_response
+class TechnicalErrorMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+    def __call__(self, request):
+        return self.get_response(request)
+    def process_exception(self, request, exception):
+        if request.user.is_superuser:
+            return technical_500_response(request, *sys.exc_info())
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -16,9 +26,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-change-this-in-production-12345678910'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'sparkservice.ru']
 
 
 # Application definition
@@ -30,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'main',
+    'main.apps.MainConfig',
 ]
 
 MIDDLEWARE = [
@@ -95,7 +105,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
+DATE_INPUT_FORMATS = ['%d.%m.%Y', '%d.%m.%y', '%Y-%m-%d']
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
@@ -103,10 +113,10 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'ru-ru'
 
 TIME_ZONE = 'Europe/Moscow'
+USE_TZ = True
 
 USE_I18N = True
 
-USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
@@ -139,7 +149,7 @@ EMAIL_HOST_PASSWORD = 'rnxzcrnbftrbtzpn'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # Session settings
-SESSION_COOKIE_AGE = 2678400  # 31 день в секундах
+SESSION_COOKIE_AGE = 2678400
 SESSION_SAVE_EVERY_REQUEST = True
 
 # Login settings
@@ -152,4 +162,4 @@ AUTHENTICATION_BACKENDS = [
     'main.backends.PhoneBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
-ADMIN_PHONE = '+7 (999) 887-76-66'  # укажи нужный номер
+ADMIN_PHONE = '+7 (900) 507-61-79'

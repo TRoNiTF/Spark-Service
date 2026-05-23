@@ -1,7 +1,5 @@
 {% extends 'base.html' %}
-
-{% block title %}Главная - Сервисный центр ИСКРА{% endblock %}
-
+{% block title %}Главная — Сервисный центр «ИСКРА»{% endblock %}
 {% block content %}
 <section class="hero">
     <div class="container">
@@ -24,7 +22,7 @@
                         {% csrf_token %}
                         <div class="form-group">
                             <label for="consultName">Имя</label>
-                            <input type="text" id="consultName" name="name" class="form-control" required>
+                            <input type="text" id="consultName" name="name" maxlength="20" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="consultPhone">Телефон</label>
@@ -44,35 +42,73 @@
         </div>
     </div>
 </section>
-
 <section class="advantages">
     <div class="container">
         <h2 class="section-title">Почему выбирают нас</h2>
-        <div class="advantages-grid">
-            <div class="advantage-item">
-                <div class="advantage-icon">🛡️</div>
-                <h3>Гарантия 14 дней</h3>
-                <p>На все виды работ</p>
+        <div class="glide advantages-glide">
+            <div class="glide__track" data-glide-el="track">
+                <ul class="glide__slides">
+                    <li class="glide__slide">
+                        <div class="advantage-item">
+                            <div class="advantage-icon">🛡️</div>
+                            <h3>Гарантия 14 дней</h3>
+                            <p>На все виды работ</p>
+                        </div>
+                    </li>
+                    <li class="glide__slide">
+                        <div class="advantage-item">
+                            <div class="advantage-icon">🔧</div>
+                            <h3>Профессиональное оборудование</h3>
+                            <p>Современное оснащение</p>
+                        </div>
+                    </li>
+                    <li class="glide__slide">
+                        <div class="advantage-item">
+                            <div class="advantage-icon">👨‍🔧</div>
+                            <h3>Опытные специалисты</h3>
+                            <p>Более 10 лет опыта</p>
+                        </div>
+                    </li>
+                    <li class="glide__slide">
+                        <div class="advantage-item">
+                            <div class="advantage-icon">🔩</div>
+                            <h3>Подборка запчастей</h3>
+                            <p>Быстрый заказ и доставка</p>
+                        </div>
+                    </li>
+                    <li class="glide__slide">
+                        <div class="advantage-item">
+                            <div class="advantage-icon">⚡</div>
+                            <h3>Срочный ремонт</h3>
+                            <p>В кратчайшие сроки</p>
+                        </div>
+                    </li>
+                    <li class="glide__slide">
+                        <div class="advantage-item">
+                            <div class="advantage-icon">⚙️</div>
+                            <h3>Электронные системы</h3>
+                            <p>Специализация на датчиках и проводке</p>
+                        </div>
+                    </li>
+                    <li class="glide__slide">
+                        <div class="advantage-item">
+                            <div class="advantage-icon">🎯</div>
+                            <h3>Точная диагностика</h3>
+                            <p>Найдем причину неисправности</p>
+                        </div>
+                    </li>
+                    <li class="glide__slide">
+                        <div class="advantage-item">
+                            <div class="advantage-icon">📞</div>
+                            <h3>Бесплатная консультация</h3>
+                            <p>Оценим проблему до приезда</p>
+                        </div>
+                    </li>
+                </ul>
             </div>
-            <div class="advantage-item">
-                <div class="advantage-icon">🔧</div>
-                <h3>Профессиональное оборудование</h3>
-                <p>Современное оснащение</p>
-            </div>
-            <div class="advantage-item">
-                <div class="advantage-icon">👨‍🔧</div>
-                <h3>Опытные специалисты</h3>
-                <p>Более 10 лет опыта</p>
-            </div>
-            <div class="advantage-item">
-                <div class="advantage-icon">🔩</div>
-                <h3>Подборка запчастей</h3>
-                <p>Быстрый заказ и доставка</p>
-            </div>
-            <div class="advantage-item">
-                <div class="advantage-icon">⚡</div>
-                <h3>Срочный ремонт</h3>
-                <p>В кратчайшие сроки</p>
+            <div class="glide__arrows" data-glide-el="controls">
+                <button class="glide__arrow glide__arrow--left" data-glide-dir="<">❮</button>
+                <button class="glide__arrow glide__arrow--right" data-glide-dir=">">❯</button>
             </div>
         </div>
     </div>

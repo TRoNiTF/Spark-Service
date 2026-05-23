@@ -1,21 +1,19 @@
 {% extends 'base.html' %}
 {% load static %}
-
-{% block title %}{{ service.name }} - Сервисный центр ИСКРА{% endblock %}
-
+{% block title %}{{ service.name }} — Сервисный центр «ИСКРА»{% endblock %}
 {% block content %}
 <section class="page-header">
     <div class="container">
         <h1>{{ service.name }}</h1>
     </div>
 </section>
-
 <section class="service-detail">
-    <div class="container">
+    <div class="container detail-container">
         <div class="service-detail-content">
             <div class="service-detail-main">
                 {% if service.image %}
-                    <img src="{{ service.image.url }}" alt="{{ service.name }}" class="service-detail-image">
+                    <img src="{{ service.image.url }}" alt="{{ service.name }}" class="service-detail-image"
+                    onclick="openImageViewer(this.src)">
                 {% else %}
                     <div class="service-detail-image-placeholder">[Изображение]</div>
                 {% endif %}
@@ -29,10 +27,8 @@
                 </div>
             </div>
         </div>
-
         <div class="reviews-section">
             <h2>Отзывы</h2>
-            
             {% if user.is_authenticated %}
             <div class="review-form">
                 <h3>Оставить отзыв</h3>
@@ -47,7 +43,6 @@
                 <a href="{% url 'login' %}">Войдите</a>, чтобы оставить отзыв
             </p>
             {% endif %}
-
             <div class="reviews-list">
                 {% for review in reviews %}
                 <div class="review-item">
@@ -73,5 +68,10 @@
         </div>
     </div>
 </section>
+<div id="imageViewerModal" class="image-modal">
+    <div class="image-modal-container">
+        <img class="image-modal-content" id="fullImageView">
+    </div>
+</div>
 {% endblock %}
 

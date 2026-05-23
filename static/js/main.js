@@ -1,77 +1,80 @@
 // Мобильное меню (бургер)
 document.addEventListener('DOMContentLoaded', function() {
-    const navToggle = document.getElementById('navToggle');
-    const navigation = document.querySelector('.navigation');
-    const menuOverlay = document.getElementById('menuOverlay');
-
-    console.log('=== ОТЛАДКА МЕНЮ ===');
-    console.log('navToggle:', navToggle);
-    console.log('navigation:', navigation);
-    console.log('menuOverlay:', menuOverlay);
-
-
-
-    if (!navToggle) {
-        console.error('Кнопка navToggle не найдена!');
-        return;
-    }
-    if (!navigation) {
-        console.error('Блок navigation не найден!');
-        return;
-    }
+    const toggle = document.getElementById('navToggle');
+    const nav = document.querySelector('.navigation');
+    const overlay = document.getElementById('menuOverlay');
+    let saveScrollY = 0;
+    let callModalScrollY = 0;
+    let privacyModalScrollY = 0;
+    if (!toggle || !nav) return;
 
     function closeMenu() {
-        console.log('Закрытие меню');
-        navigation.classList.remove('active');
-        navToggle.classList.remove('active');
-        if (menuOverlay) menuOverlay.classList.remove('active');
+        nav.classList.remove('active');
+        toggle.classList.remove('active');
+        if (overlay) overlay.classList.remove('active');
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
         document.body.style.overflow = '';
+        document.documentElement.style.overflow = '';
     }
 
     function openMenu() {
-        console.log('Открытие меню');
-        navigation.classList.add('active');
-        navToggle.classList.add('active');
-        if (menuOverlay) menuOverlay.classList.add('active');
+        saveScrollY = window.scrollY;
+        nav.classList.add('active');
+        toggle.classList.add('active');
+        if (overlay) overlay.classList.add('active');
+        document.body.style.position = 'fixed';
+        document.body.style.top = `-${saveScrollY}px`;
+        document.body.style.width = '100%';
         document.body.style.overflow = 'hidden';
+        document.documentElement.style.overflow = 'hidden';
     }
 
-    navToggle.addEventListener('click', function(e) {
+    toggle.addEventListener('click', function(e) {
         e.stopPropagation();
-        console.log('Клик по бургеру');
-        if (navigation.classList.contains('active')) {
-            openMenu();
-        } else {
+        if (nav.classList.contains('active')) {
             closeMenu();
+        } else {
+            openMenu();
         }
     });
 
-    if (menuOverlay) {
-        menuOverlay.addEventListener('click', function() {
-            console.log('Клик по оверлею');
-            openMenu();
-        });
+    if (overlay) {
+        overlay.addEventListener('click', closeMenu);
     }
 
-    const navLinks = document.querySelectorAll('.nav-menu a');
-    navLinks.forEach(link => {
-        link.addEventListener('click', function() {
-            console.log('Клик по ссылке');
-            openMenu();
-        });
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+        link.addEventListener('click', closeMenu);
     });
 
     window.addEventListener('resize', function() {
-        if (window.innerWidth > 900) {
-            openMenu();
+        if (window.innerWidth > 1110) {
+            closeMenu();
         }
     });
-
-    // Инициализация маски телефона
-    initPhoneMasks();
-
-    // Автоматическое закрытие сообщений через 5 секунд
-    setTimeout(function() {
+});
+// Инициализация карусели преимуществ
+document.addEventListener('DOMContentLoaded', function() {
+    const glideElement = document.querySelector('.advantages-glide');
+    if (glideElement) {
+        new Glide('.advantages-glide', {
+            type: 'carousel',
+            perView: 4,
+            gap: 25,
+            breakpoints: {
+                1150: { perView: 3 },
+                890: { perView: 2 },
+                610: { perView: 1 }
+            },
+            autoplay: 2000,
+            hoverpause: true,
+            animationDuration: 400
+        }).mount();
+    }
+});
+initPhoneMasks();
+setTimeout(function() {
         const alerts = document.querySelectorAll('.alert');
         alerts.forEach(function(alert) {
             alert.style.transition = 'opacity 0.5s';
@@ -81,7 +84,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 500);
         });
     }, 5000);
-});
 
 // Модальное окно заказа звонка
 function openCallModal(serviceId = null) {
@@ -93,30 +95,90 @@ function openCallModal(serviceId = null) {
     } else {
         serviceIdInput.value = '';
     }
-
+    callModalScrollY = window.scrollY;
     modal.style.display = 'block';
+    document.body.style.position = 'fixed';
+    document.body.style.width = '100%';
     document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
 }
 
 function closeCallModal() {
     const modal = document.getElementById('callModal');
     modal.style.display = 'none';
     document.getElementById('callForm').reset();
-    document.body.style.overflow = '';
+    const privacyModal = document.getElementById('privacyModal');
+    const isPrivacyOpen = privacyModal.style.display === 'flex' || privacyModal.style.display === 'block';
+    if (!isPrivacyOpen) {
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        document.body.style.overflow = '';
+        document.documentElement.style.overflow = '';
+        window.scrollTo(0, callModalScrollY);
+    }
 }
 
 // Модальное окно политики конфиденциальности
 function openPrivacyModal() {
     const modal = document.getElementById('privacyModal');
+    privacyModalScrollY = window.scrollY;
     modal.style.display = 'block';
+    modal.style.overflow = 'auto';
+    modal.style.maxHeight = '100vh';
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${privacyModalScrollY}px`;
+    document.body.style.width = '100%';
     document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
 }
 
 function closePrivacyModal() {
     const modal = document.getElementById('privacyModal');
     modal.style.display = 'none';
+    modal.style.overflow = '';
+    modal.style.maxHeight = '';
+    const callModal = document.getElementById('callModal');
+    const isCallOpen = callModal.style.display === 'flex' || callModal.style.display === 'block';
+    if (!isCallOpen) {
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        document.body.style.overflow = '';
+        document.documentElement.style.overflow = '';
+        window.scrollTo(0, privacyModalScrollY);
+    }
+}
+
+// Модальное окно просмотра фотографии в услугах
+function openImageViewer(imageSrc) {
+    const modal = document.getElementById('imageViewerModal');
+    const fullImage = document.getElementById('fullImageView');
+    modal.style.display = 'block';
+    fullImage.src = imageSrc;
+    document.body.style.overflow = 'hidden';
+}
+function closeImageViewer() {
+    const modal = document.getElementById('imageViewerModal');
+    modal.style.display = 'none';
     document.body.style.overflow = '';
 }
+const imageModal = document.getElementById('imageViewerModal');
+if (imageModal) {
+    imageModal.addEventListener('click', function(event) {
+        if (event.target === imageModal) {
+            closeImageViewer();
+        }
+    });
+}
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        const modal = document.getElementById('imageViewerModal');
+        if (modal && modal.style.display === 'block') {
+            closeImageViewer();
+        }
+    }
+});
 
 // Закрытие модального окна при клике вне его
 window.onclick = function(event) {
@@ -285,18 +347,14 @@ function initPhoneMasks() {
 // Валидация формы регистрации
 document.addEventListener('DOMContentLoaded', function() {
     const registerForm = document.querySelector('.auth-form-container form');
-
     if (registerForm && window.location.pathname.includes('register')) {
         const password1 = document.getElementById('password1');
         const password2 = document.getElementById('password2');
-
         if (password1 && password2) {
-            // Запрет копирования пароля
             password1.addEventListener('copy', function(e) {
                 e.preventDefault();
                 return false;
             });
-
             password2.addEventListener('paste', function(e) {
                 e.preventDefault();
                 return false;
@@ -308,19 +366,15 @@ document.addEventListener('DOMContentLoaded', function() {
 // Предпросмотр изображения при загрузке
 document.addEventListener('DOMContentLoaded', function() {
     const imageInputs = document.querySelectorAll('input[type="file"][accept*="image"]');
-
     imageInputs.forEach(input => {
         input.addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (file) {
-                // Проверка размера (5MB)
                 if (file.size > 5 * 1024 * 1024) {
                     alert('Размер файла не должен превышать 5 МБ');
                     e.target.value = '';
                     return;
                 }
-
-                // Проверка формата
                 const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
                 if (!allowedTypes.includes(file.type)) {
                     alert('Допустимые форматы: JPG, PNG, GIF, WEBP');
@@ -336,7 +390,6 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('DOMContentLoaded', function() {
     const currentPath = window.location.pathname;
     const navLinks = document.querySelectorAll('.nav-menu a');
-
     navLinks.forEach(link => {
         const href = link.getAttribute('href');
         if (href === currentPath || (currentPath === '/' && href === '/')) {
@@ -345,69 +398,3 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
-
-// Принудительная привязка меню (финальная версия)
-(function() {
-    function initMobileMenu() {
-        const toggle = document.getElementById('navToggle');
-        const nav = document.querySelector('.navigation');
-        const overlay = document.getElementById('menuOverlay');
-
-        if (!toggle || !nav) {
-            console.log('Элементы меню не найдены');
-            return;
-        }
-
-        console.log('Инициализация меню');
-
-        // Функция закрытия
-        function closeMenu() {
-            nav.classList.remove('active');
-            toggle.classList.remove('active');
-            if (overlay) overlay.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        // Функция открытия
-        function openMenu() {
-            nav.classList.add('active');
-            toggle.classList.add('active');
-            if (overlay) overlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        // Обработчик клика по бургеру
-        toggle.onclick = function(e) {
-            e.stopPropagation();
-            if (nav.classList.contains('active')) {
-                closeMenu();
-            } else {
-                openMenu();
-            }
-        };
-
-        // Закрытие по оверлею
-        if (overlay) {
-            overlay.onclick = closeMenu;
-        }
-
-        // Закрытие по ссылкам в меню
-        document.querySelectorAll('.nav-menu a').forEach(link => {
-            link.onclick = closeMenu;
-        });
-
-        // Закрытие при изменении размера окна
-        window.onresize = function() {
-            if (window.innerWidth > 768) {
-                closeMenu();
-            }
-        };
-    }
-
-    // Запускаем после загрузки DOM
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initMobileMenu);
-    } else {
-        initMobileMenu();
-    }
-})();

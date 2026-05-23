@@ -1,19 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block title %}Профиль — Сервисный центр «ИСКРА»{% endblock %}
-
 {% block content %}
 <section class="page-header">
     <div class="container">
         <h1>Профиль пользователя</h1>
     </div>
 </section>
-
 <section class="profile-section">
     <div class="container">
         <div class="profile-content">
-            <!-- Левая колонка - аватар -->
             <div class="profile-sidebar">
                 <div class="profile-avatar-section">
                     {% if user.image %}
@@ -21,27 +17,24 @@
                     {% else %}
                         <div class="profile-avatar-placeholder">👤</div>
                     {% endif %}
-
                     <div class="profile-avatar-actions">
                         <form method="post" enctype="multipart/form-data" id="imageUploadForm">
                             {% csrf_token %}
-                            <input type="file" name="image" id="imageInput" accept="image/*" style="display: none;" onchange="document.getElementById('imageUploadForm').submit()">
-                            <button type="button" class="btn btn-secondary btn-sm" onclick="document.getElementById('imageInput').click()">
+                            <input type="file" name="image" id="imageInput" accept="image/jpeg,image/png,image/gif,image/webp, .jpg, .jpeg, .png, .gif, .webp" style="display: none;" onchange="document.getElementById('imageUploadForm').submit()">
+                            <button type="button" class="btn btn-sm btn-change" onclick="document.getElementById('imageInput').click()">
                                 Изменить фото
                             </button>
                         </form>
-
                         {% if user.image %}
                         <form method="post" style="margin-top: 10px;">
                             {% csrf_token %}
-                            <button type="submit" name="delete_image" class="btn btn-danger btn-sm">
+                            <button type="submit" name="delete_image" class="btn btn-danger btn-sm btn-delete">
                                 Удалить фото
                             </button>
                         </form>
                         {% endif %}
                     </div>
                 </div>
-
                 <div class="profile-info-display">
                     <h3>{{ user.get_full_name }}</h3>
                     <p>{{ user.telephone }}</p>
@@ -50,18 +43,13 @@
                         <p>Дата рождения: {{ user.birth_date|date:"d.m.Y" }}</p>
                     {% endif %}
                 </div>
-
-                <a href="{% url 'logout' %}" class="btn btn-danger">Выйти</a>
+                <a href="{% url 'logout' %}" class="btn btn-danger btn-profile-logout">Выйти</a>
             </div>
-
-            <!-- Правая колонка - формы -->
             <div class="profile-main">
-                <!-- Форма редактирования профиля -->
                 <h2>Редактирование профиля</h2>
                 <form method="post" class="profile-form">
                     {% csrf_token %}
                     <input type="hidden" name="update_profile" value="1">
-
                     <div class="form-group">
                         <label for="{{ profile_form.surname.id_for_label }}">{{ profile_form.surname.label }}</label>
                         {{ profile_form.surname }}
@@ -69,7 +57,6 @@
                             <div class="error">{{ profile_form.surname.errors.0 }}</div>
                         {% endif %}
                     </div>
-
                     <div class="form-group">
                         <label for="{{ profile_form.name.id_for_label }}">{{ profile_form.name.label }}</label>
                         {{ profile_form.name }}
@@ -77,7 +64,6 @@
                             <div class="error">{{ profile_form.name.errors.0 }}</div>
                         {% endif %}
                     </div>
-
                     <div class="form-group">
                         <label for="{{ profile_form.patronymic.id_for_label }}">{{ profile_form.patronymic.label }}</label>
                         {{ profile_form.patronymic }}
@@ -85,7 +71,6 @@
                             <div class="error">{{ profile_form.patronymic.errors.0 }}</div>
                         {% endif %}
                     </div>
-
                     <div class="form-group">
                         <label for="{{ profile_form.birth_date.id_for_label }}">{{ profile_form.birth_date.label }}</label>
                         {{ profile_form.birth_date }}
@@ -93,8 +78,6 @@
                             <div class="error">{{ profile_form.birth_date.errors.0 }}</div>
                         {% endif %}
                     </div>
-
-                    <!-- Поле EMAIL -->
                     <div class="form-group">
                         <label for="id_email">Электронная почта</label>
                         {{ profile_form.email }}
@@ -102,27 +85,21 @@
                             <div class="error">{{ profile_form.email.errors.0 }}</div>
                         {% endif %}
                     </div>
-
                     <div class="form-group">
                         <label for="{{ profile_form.telephone.id_for_label }}">{{ profile_form.telephone.label }}</label>
                         {{ profile_form.telephone }}
-                        <small class="form-text">В формате: +79991234567 (без пробелов и скобок)</small>
+                        <small class="form-text" >В формате: +79991234567 или 89991234567 (без пробелов и скобок)</small>
                         {% if profile_form.telephone.errors %}
                             <div class="error">{{ profile_form.telephone.errors.0 }}</div>
                         {% endif %}
                     </div>
-
                     <button type="submit" class="btn btn-primary">Сохранить изменения</button>
                 </form>
-
                 <hr style="margin: 40px 0;">
-
-                <!-- Форма смены пароля -->
                 <h2>Смена пароля</h2>
                 <form method="post" class="password-form">
                     {% csrf_token %}
                     <input type="hidden" name="change_password" value="1">
-
                     <div class="form-group">
                         <label for="{{ password_form.old_password.id_for_label }}">{{ password_form.old_password.label }}</label>
                         <div class="password-wrapper">
@@ -133,7 +110,6 @@
                             <div class="error">{{ password_form.old_password.errors.0 }}</div>
                         {% endif %}
                     </div>
-
                     <div class="form-group">
                         <label for="{{ password_form.new_password1.id_for_label }}">{{ password_form.new_password1.label }}</label>
                         <div class="password-wrapper">
@@ -145,7 +121,6 @@
                             <div class="error">{{ password_form.new_password1.errors.0 }}</div>
                         {% endif %}
                     </div>
-
                     <div class="form-group">
                         <label for="{{ password_form.new_password2.id_for_label }}">{{ password_form.new_password2.label }}</label>
                         <div class="password-wrapper">
@@ -156,8 +131,7 @@
                             <div class="error">{{ password_form.new_password2.errors.0 }}</div>
                         {% endif %}
                     </div>
-
-                    <button type="submit" class="btn btn-danger">Изменить пароль</button>
+                    <button type="submit" class="btn btn-danger btn-change-password">Изменить пароль</button>
                 </form>
             </div>
         </div>
