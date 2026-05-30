@@ -27,6 +27,8 @@ def home(request):
 def services(request):
     services_list = Service.objects.all()
     return render(request, 'main/services.html', {'services': services_list})
+
+
 def service_detail(request, service_id):
     service = get_object_or_404(Service, id=service_id)
     reviews = service.reviews.select_related('user').all()
@@ -39,6 +41,10 @@ def service_detail(request, service_id):
             review.save()
             messages.success(request, 'Ваш отзыв успешно добавлен!')
             return redirect('service_detail', service_id=service.id)
+        else:
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, "Отредактируйте текст отзыва.")
     else:
         form = ReviewForm()
     return render(request, 'main/service_detail.html', {

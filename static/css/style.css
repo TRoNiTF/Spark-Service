@@ -208,7 +208,7 @@ body {
     position: fixed;
     top: 90px;
     right: 20px;
-    z-index: 1001;
+    z-index: 1000007;
     max-width: 400px;
 }
 
@@ -1371,12 +1371,12 @@ a.admin-link:hover {
     }
 
     .messages-container {
-        top: 145px;
+        top: 150px;
         font-size: 14px;
     }
 
     .modal-content {
-        margin-top: 20vh;
+        margin-top: 30vh;
     }
 
     .service-name {
@@ -1437,7 +1437,7 @@ a.admin-link:hover {
         width: 280px !important;
         height: 100vh !important;
         background: #000 !important;
-        z-index: 100003!important;
+        z-index: 100003 !important;
         margin: 0 !important;
         padding-top: 100px !important;
         display: block !important;
@@ -1486,6 +1486,30 @@ a.admin-link:hover {
     }
 }
 
+@media (max-width: 550px) {
+    .modal-content {
+        max-width: 400px;
+    }
+}
+
+@media (max-width: 450px) {
+    .modal-content {
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 350px) {
+    .modal-content {
+        max-width: 280px;
+    }
+}
+
+@media (max-width: 370px) {
+    #mainNav.navigation {
+        width: 220px !important;
+    }
+}
+
 @media (max-width: 500px) {
     .container {
         padding: 0 15px;
@@ -1498,6 +1522,11 @@ a.admin-link:hover {
 
     .hero-title {
         font-size: 28px;
+    }
+
+    .messages-container {
+        font-size: 12px;
+        max-width: 240px;
     }
 
     .services-grid,
@@ -1529,9 +1558,8 @@ a.admin-link:hover {
         font-size: 16px;
     }
 }
-@media (max-width: 356px) {
+@media (max-width: 358px) {
     .messages-container {
-        top: 180px;
-        font-size: 12px;
+        top: 190px;
     }
 }

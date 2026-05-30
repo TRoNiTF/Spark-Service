@@ -35,6 +35,11 @@
                 <form method="post">
                     {% csrf_token %}
                     {{ form.description }}
+                    {% if form.description.errors %}
+                        <div class="error" style="color: red; margin-top: 5px;">
+                            {{ form.description.errors.0 }}
+                        </div>
+                    {% endif %}
                     <button type="submit" class="btn btn-primary">Отправить отзыв</button>
                 </form>
             </div>

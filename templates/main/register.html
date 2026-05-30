@@ -95,4 +95,17 @@
         </div>
     </div>
 </section>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.activeElement?.blur();
+        document.querySelectorAll('[autofocus]').forEach(el => el.removeAttribute('autofocus'));
+        window.scrollTo(0, 0);
+        setTimeout(function() {
+            window.scrollTo(0, 0);
+        }, 100);
+    });
+    window.addEventListener('load', function() {
+        window.scrollTo(0, 0);
+    });
+</script>
 {% endblock %}

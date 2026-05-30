@@ -6,6 +6,7 @@ from django.core.exceptions import ValidationError
 from .models import CustomUser, Review, CallRequest
 import re
 from datetime import date, timedelta
+from utils.profanity_filter import has_profanity
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -341,6 +342,11 @@ class ReviewForm(forms.ModelForm):
         }),
         label='Отзыв'
     )
+    def clean_description(self):
+        text = self.cleaned_data.get('description')
+        if text and has_profanity(text):
+            raise ValidationError('Отзыв содержит недопустимые слова. Пожалуйста, отредактируйте текст.')
+        return text
     class Meta:
         model = Review
         fields = ('description',)
